@@ -46,7 +46,7 @@ def Generate():
         size = int(sizeEntry.get())
     except:
         size = 95
-
+# okay
     if minVal < 0: minVal = 0
     if maxVal < 0: maxVal = 100
     if size < 0 or size >= 96: size = 95
