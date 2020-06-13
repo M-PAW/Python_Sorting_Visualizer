@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 import random
 from bubbleSort import bubble_sort
+from quickSort import quick_sort
 
 root = Tk()
 root.title('Sorting Algorithm Visualization')
@@ -49,7 +50,18 @@ def Generate():
 
 def StartAlgorithm():
     global data
-    bubble_sort(data, drawData, speedScale.get())
+
+    if not data: return
+
+    if algMenu.get() == 'Quick Sort':
+        quick_sort(data, 0, len(data)-1, drawData, speedScale.get())
+        drawData(data, ['green' for x in range(len(data))])
+
+    elif algMenu.get() == 'Bubble Sort':
+        bubble_sort(data, drawData, speedScale.get())
+
+    elif algMenu.get() ==  'Merge Sort':
+        print("Merge Sort Selected")
 
 
 # frame / base layout
@@ -58,18 +70,19 @@ UI_frame.grid(row=0, column=0, padx=10, pady=5)
 
 canvas = Canvas(root, width=780, height=380, bg='white')
 canvas.grid(row=1, column=0, padx=10, pady=5)
+## Michael Walter - M-PAW on GitHub
 
 #User Interface Area
 #Row[0]
 Label(UI_frame, text="Algorithm: ", bg='grey').grid(row=0, column=0, padx=5, pady=5, sticky=W)
-algMenu = ttk.Combobox(UI_frame, textvariable = selected_alg, values=['Bubble Sort', 'Merge Sort'])
+algMenu = ttk.Combobox(UI_frame, textvariable = selected_alg, values=['Bubble Sort', 'Quick Sort', 'Merge Sort'])
 algMenu.grid(row=0, column=1, padx=5, pady=5)
 algMenu.current(0)
 
 Button(UI_frame, text="Start", command=StartAlgorithm, bg='red').grid(row=0, column=3, padx=5, pady=5)
 
 #Row[1]
-speedScale = Scale(UI_frame, from_=0.1, to=2.0, length=200, digits=2, resolution=0.2, orient=HORIZONTAL, label="Select Speed [s]")
+speedScale = Scale(UI_frame, from_=0.1, to=5.0, length=200, digits=2, resolution=0.2, orient=HORIZONTAL, label="Select Speed [s]")
 speedScale.grid(row=1, column=1, padx=5, pady=5, sticky=W)
 
 sizeEntry = Scale(UI_frame, from_=1, to=100, resolution=1, orient=HORIZONTAL, label="Data Size")
@@ -82,5 +95,7 @@ maxEntry = Scale(UI_frame, from_=11, to=100, resolution=1, orient=HORIZONTAL, la
 maxEntry.grid(row=1, column=5, padx=5, pady=5, sticky=W)
 
 Button(UI_frame, text="Generate", command=Generate, bg='white').grid(row=0, column=2, padx=5, pady=5)
+
+## Michael Walter - M-PAW on GitHub
 
 root.mainloop()
